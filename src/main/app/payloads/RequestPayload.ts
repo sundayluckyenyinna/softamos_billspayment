@@ -1,6 +1,7 @@
 /*eslint-disable*/
 
 import { ApiProperty } from "@nestjs/swagger";
+import { IsIn } from "class-validator";
 
 export default class AirtimeRequest{
 
@@ -14,5 +15,12 @@ export default class AirtimeRequest{
   beneficialEmailAddress: string;
 
   @ApiProperty({ name: "airtimeAmount", type: String })
-  airtimeAmount: string;
+  airtimeAmount: number;
+
+  @ApiProperty({ name: "telco", type: String })
+  @IsIn(["MTN", "GLO"])
+  telco: string;
+
+  @ApiProperty({ name: "requestId", type: String })
+  requestId: string;
 }

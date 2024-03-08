@@ -1,6 +1,6 @@
 ############### Server configuration properties. #################
 server:
-  port: 2000
+  port: 3000
 
 ################# Softamos application configuration properties. ###################
 app:
@@ -36,4 +36,28 @@ swagger:
 
 microservice:
   config:
-    port: 2001
+    port: 3001
+
+    wallet:
+      name: WALLET_SERVICE
+      port: 2001
+
+
+################# Configurations for Bills Payment Commission #################
+commission:
+  bills-payment:
+
+    airtime:
+      MTN: 1.5
+      GLO: 1.3
+
+    data:
+      MTN: 1.7
+      GLO: 1.6
+
+    dstv: 1.4
+    gotv: 1.6
+
+    electricity:
+      eko-electricity: 1.4
+      jos-electricity: 1.8

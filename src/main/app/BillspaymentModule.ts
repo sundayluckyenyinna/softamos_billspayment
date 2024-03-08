@@ -1,7 +1,6 @@
 /*eslint-disable*/
 
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common";
-import AgentWalletController from "./controllers/AgentWalletController";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import Agent from "./models/Agent";
 import AgentAuth from "./models/AgentAuth";
@@ -13,23 +12,23 @@ import AgentVirtualAccountRepository from "./repositories/AgentVirtualAccountRep
 import AgentWalletRepository from "./repositories/AgentWalletRepository";
 import AgentWalletTransactionRepository from "./repositories/AgentWalletTransactionRepository";
 import AgentWalletTransaction from "./models/AgentWalletTransaction";
-import AccountController from "./controllers/AccountController";
-import AccountService from "./services/AccountService";
-import WalletService from "./services/WalletService";
-import WalletValidatorService from "./services/WalletValidatorService";
 import ApplicationLoggerMiddleware from "./middlewares/ApplicationLoggerMiddleware";
 import AuthenticationMiddleware from "./middlewares/AuthenticationMiddleware";
+import CdkBillProcessor from "./integration/cdkbills/CdkBillProcessor";
+import BillsPaymentController from "./controllers/BillsPaymentController";
+import BillsPaymentService from "./services/BillsPaymentService";
 
 @Module({
   imports: [ TypeOrmModule.forFeature([Agent, AgentAuth, AgentWallet, AgentVirtualAccount, AgentWalletTransaction])],
   providers: [
     AgentRepository, AgentAuthRepository, AgentVirtualAccountRepository,
-    AgentWalletRepository, AgentWalletTransactionRepository, AccountService,
-    WalletService, WalletValidatorService, ApplicationLoggerMiddleware, AuthenticationMiddleware
+    AgentWalletRepository, AgentWalletTransactionRepository, ApplicationLoggerMiddleware, AuthenticationMiddleware,
+    CdkBillProcessor, BillsPaymentService
   ],
-  controllers: [AgentWalletController, AccountController],
+  controllers: [BillsPaymentController],
   exports: [AgentRepository]
 })
+
 export default class BillspaymentModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
     consumer

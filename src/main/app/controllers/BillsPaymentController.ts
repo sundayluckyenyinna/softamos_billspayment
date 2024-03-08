@@ -5,11 +5,13 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
-  ApiInternalServerErrorResponse,
+  ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation,
   ApiTags
 } from "@nestjs/swagger";
-import { Controller, HttpStatus } from "@nestjs/common";
-import { BadRequestPayload, InternalServerError } from "../payloads/ResponsePayload";
+import { Body, Controller, HttpStatus, Post } from "@nestjs/common";
+import { AirtimeVendResponse, ApiResponse, BadRequestPayload, InternalServerError } from "../payloads/ResponsePayload";
+import BillsPaymentService from "../services/BillsPaymentService";
+import AirtimeRequest from "../payloads/RequestPayload";
 
 
 @ApiTags('Agent account service')
@@ -20,4 +22,14 @@ import { BadRequestPayload, InternalServerError } from "../payloads/ResponsePayl
 @Controller({ path: '/bills'})
 export default class BillsPaymentController{
 
+
+  constructor(private readonly billsPaymentService: BillsPaymentService) {
+  }
+
+   @Post('/airtime/vending')
+   @ApiOperation({ description: "This API make airtime purchase"})
+   @ApiOkResponse({description: "Successful response", status: 200, type: ApiResponse<AirtimeVendResponse>})
+   async handleAirtimeVendingRequest(@Body() request: AirtimeRequest): Promise<ApiResponse<AirtimeVendResponse>>{
+       return this.billsPaymentService.processAirtimeVendRequest(request);
+   }
 }
