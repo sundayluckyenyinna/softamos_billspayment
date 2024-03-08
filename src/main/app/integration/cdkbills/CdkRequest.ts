@@ -8,7 +8,7 @@ export interface CdkAirtimeRequestDTO{
   comment: string;
 }
 
-export interface CdkAirtimeResponseDTO {
+export class CdkAirtimeResponseDTO {
    responseCode: string;
    responseMessage: string;
    referenceId: string;
